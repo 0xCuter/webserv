@@ -3,6 +3,8 @@
 WebServ::~WebServ() {;}
 
 WebServ::WebServ() {
+      root = "HTML";
+      home = "HTML/wow.html";
       cgi_exts.insert(".php");
       cgi_exts.insert(".py");
       

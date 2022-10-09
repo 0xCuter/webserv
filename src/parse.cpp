@@ -22,8 +22,7 @@ vector<string> split_set(std::string s, std::string delimiter) {
     size_t pos_start = 0, pos_end = 0;
     std::string token;
 
-    while ((pos_start = s.find_first_not_of(delimiter, pos_end)) != string::npos)
-    {
+    while ((pos_start = s.find_first_not_of(delimiter, pos_end)) != string::npos) {
         pos_start = s.find_first_not_of(delimiter, pos_end);
         pos_end = s.find_first_of(delimiter, pos_start);
         ret.push_back(s.substr(pos_start, pos_end - pos_start));
@@ -56,7 +55,7 @@ vector<vector<string> > parse_config(std::string conf_path) {
         // else {
         //     if ((*it2)[0] == "errors") //no more than one arg & check if exists
         //     else if ((*it2)[0] == "max_body_size") // check if positive
-        //     else if ((*it2)[0] == "methods") //methods check if subset of existing methods 
+        //     else if ((*it2)[0] == "methods") // check if subset of existing methods 
         //     else if ((*it2)[0] == "cgi") //check if subset of existing extensions
         // }
     }

@@ -11,7 +11,7 @@ private:
     int             master_socket;
     fd_set          readfds;  
     fd_set          writefds;  
-    vector<int>     c_sd;
+    vector<int>     c_sd;// clients eventually
     struct sockaddr_in address;
     char            buffer[BUFF_SIZE];
     class socket_except :  public exception {
@@ -30,13 +30,8 @@ private:
     
 public:
     Socket(int port) ;
-
     void check_ready();
-    
-    void new_connection(const char *message) ;
-    
+    void new_connection() ;
     int messages();
-
-
 };
 

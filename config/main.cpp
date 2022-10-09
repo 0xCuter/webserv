@@ -112,7 +112,7 @@ int main(int ac , char *av[])
                 if ((valread = read( *it , buffer, Buff_size)) == 0)  {  
                     //Somebody disconnected , get his details and print 
                     getpeername(*it , (struct sockaddr*)&address , (socklen_t*)&addrlen);  
-                    printf("Host disconnected , ip %s , port %d \n" , inet_ntoa(address.sin_addr) , ntohs(address.sin_port));  
+                    printf("Host disconnected , ip %s , port %d, sd %d \n" , inet_ntoa(address.sin_addr) , ntohs(address.sin_port), *it);  
                     //Close the socket and mark as 0 in list for reuse 
                     close(*it);  
                     c_socks.erase(it--);

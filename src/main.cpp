@@ -8,7 +8,7 @@ int main(int ac, char **av) {
     try {
         Server serv(av[1]);
         serv.run();
-    } catch (exception &e) {cerr << e.what();}
+    } catch (exception &e) {cerr << e.what() << endl;}
     
     return 0;
 }

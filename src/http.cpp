@@ -3,33 +3,29 @@
 Response::Response(Request &req):version(req.version), status(0), description(""),headers(""), body("") ,req_cp(req) {
     
     int ret = (w.Methods[req.method_name])(req, *this);
-    buffer << req.version << " " << ret << " " << w.HttpStatusCode[ret] << "\n";
+    buffer << req.version << " " << ret << " " << w.HttpStatusCode[ret] << "\r\n";
     // if (ret == error_values) get_body and header of error_pages
-    buffer << headers << "\n";
-    buffer << "\n" << body.str();
+    buffer << headers << "\r\n";
+    buffer << "\r\n" << body.str() << "\r\n";
 }
 
 Request::Request(char *buffer) {
     std::string file = string(buffer);
-    vector<string> elems(split_set(file.substr(0,file.find("\n")), " "));
+    vector<string> elems(split_set(file.substr(0,file.find("\r\n")), " "));
     //check there are 3 parts
     method_name = elems[0];url = elems[1];version = elems[2];
-    cout << "start\n" << method_name + " " << url+ " "  << version + " " << endl;
-    header = file.substr(file.find("\n") + 1,file.find("\r\n\r\n"));
-    cout << "header\n" << header << endl;
+    url = (url == "/") ? w.home : w.root + url;
+    header = file.substr(file.find("\r\n") + 1,file.find("\r\n\r\n"));
     body = file.substr(file.find("\r\n\r\n"));
-    cout << "body\n" << body << endl;
 }
 
 Request::~Request() {;}
 Response::~Response() {;}
 
 int GET(Request &req, Response &rep) {
-    const char *file_path = req.url.data();
-    if (req.url == "/")
-        file_path = "HTML/wow.html";
-    ifstream file_stream;
-    file_stream.open(file_path);
+
+        ifstream file_stream;
+    file_stream.open(req.url.data());
     if (file_stream.fail()) 
         return(404);
     std::string file((istreambuf_iterator<char>(file_stream)), istreambuf_iterator<char>());

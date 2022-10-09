@@ -3,7 +3,8 @@
 using namespace std;
 
 class Request {
-public:   
+public:
+    WebServ w;//used for http code lookup and method implementation
     string version; //start line
     string method_name; 
     string url;

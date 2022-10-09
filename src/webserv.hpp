@@ -1,6 +1,6 @@
 #pragma once
-#define PORT 8080
 #define MAX_CONNECTION 128
+#define TIMEOUT 5000
 #define BUFF_SIZE 4096
 #include <stdio.h> 
 #include <cstring>   //strlen 
@@ -40,6 +40,8 @@ using namespace std;
 
 class WebServ {
 public:
+    string root;
+    string home;
     map<string, Method> Methods;
     map<int, string> HttpStatusCode;
     set<string> cgi_exts;
