@@ -14,7 +14,7 @@ WebServ::WebServ(string config_path, char **env) {
       vector<vector<string> >dirs;
       vector <string> scope;
       for (vector<string>::iterator it = settings.begin(); it != settings.end(); it++) {
-           
+
             scope = get_all_scopes(*it, "routes", "[", "]");
             if (scope.size() > 1)
                   throw invalid_argument("only one route block allowed per server");
@@ -68,7 +68,7 @@ Server *WebServ::get_host(string name, int port) {
 void WebServ::run() {
       while (true) {
             requests.clear();
-            max_sd = 0; FD_ZERO(&readfds); FD_ZERO(&writefds);   
+            max_sd = 0; FD_ZERO(&readfds); FD_ZERO(&writefds);
             for (IT it = servers.begin(); it  !=servers.end(); it++)
                   max_sd = max(it->check_ready(readfds, writefds), max_sd);
             if (select(max_sd + 1, &readfds ,&writefds , NULL , NULL) <0)
@@ -77,7 +77,8 @@ void WebServ::run() {
                   it->get_requests(readfds, writefds, this);
             for (Rep it = responses.begin(); it != responses.end(); it++){
                   if (FD_ISSET(it->req_cp.sd , &writefds)){
-                        if (send(it->req_cp.sd, it->buffer.str().data(), it->buffer.str().size(), 0) <= 0)
+                        if (send(it->req_cp.sd, string(it->full_content.begin(), it->full_content.end()).c_str(),
+						string(it->full_content.begin(), it->full_content.end()).size(), 0) <= 0)
                               throw Socket::connect_except();
                         responses.erase(it--);
                   }
@@ -90,8 +91,8 @@ void WebServ::init(char **e) {
       char tmp[2048];
       cwd = string(getcwd(tmp, 2048));
       cout << cwd << endl;
-      env = (char * const *)e;     
-      root = "www"; 
+      env = (char * const *)e;
+      root = "www";
       home = "HTML/home.html";
       error_path = "errors/";
       Methods.insert(make_pair("GET",    &GET));

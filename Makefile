@@ -3,7 +3,7 @@ OBJS			= $(SRCS:.cpp=.o)
 
 CXX				= clang++
 RM				= rm -f
-INCL			= src/webserv.hpp src/parse.hpp src/http.hpp src/socket.hpp src/server.hpp 
+INCL			= src/webserv.hpp src/parse.hpp src/http.hpp src/socket.hpp src/server.hpp
 CXXFLAGS		= -Wall -Wextra -Werror -std=c++98
 
 NAME			= webserv
